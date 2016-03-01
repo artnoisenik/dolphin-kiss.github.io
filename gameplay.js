@@ -1,32 +1,42 @@
-
 (function() {
 
-  var year = 0;
-  var month = 0;
-  var day = 0;
+  // var year = 0;
+  // var month = 0;
+  // var day = 0;
+  //
+  // function randomDate(){
+  //   year = 2001 + Math.floor(Math.random() * 15);
+  //   month = 1 + Math.floor(Math.random() * 12);
+  //   day = 1 + Math.floor(Math.random() * 28);
+  // }
 
-  function randomDate(){
-    year = 2001 + Math.floor(Math.random() * 15);
-    month = 1 + Math.floor(Math.random() * 12);
-    day = 1 + Math.floor(Math.random() * 28);
+  function spaceShot(){
+
+    var year = 2001 + Math.floor(Math.random() * 15);
+    var month = 1 + Math.floor(Math.random() * 12);
+    var day = 1 + Math.floor(Math.random() * 28);
+
+    var location = "https://api.nasa.gov/planetary/apod?date=" + year + "-" + month + "-" + day + "&api_key=OaFBdZCq89Gly77oIhEQF3fupeTBThyZ9mFAVYh8";
+
+   $.getJSON(location)
+     .done(function( data ) {
+         console.log(data.hdurl);
+         $("img").attr("src", data.hdurl);
+         $("img").css('width', '100%');
+         $("img").css('object-fit', 'fill');
+         $("img").css('background-repeat', 'no-repeat');
+     });
   }
-  randomDate();
-  setInterval(randomDate,100);
+
+  spaceShot();
+  setInterval(spaceShot,20000);
 
 
   // if( x seconds) {
   //   generate random date;
   // }
 
-  var spaceShot = "https://api.nasa.gov/planetary/apod?date="+year+"-"+month+"-"+day+"&api_key=OaFBdZCq89Gly77oIhEQF3fupeTBThyZ9mFAVYh8";
-  $.getJSON( spaceShot, {
-    })
-    .done(function( data ) {
-        console.log(data.hdurl);
-        $("img").attr("src", data.hdurl);
-        $("img").css('background-size', 'canvas');
-        $("img").css('background-repeat', 'repeat');
-    });
+
 })();
 
 
