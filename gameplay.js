@@ -1,33 +1,41 @@
-SC.initialize({
-  client_id: '27f99f4210b158b064142eba4909d231',
-});
 
-SC.stream('/tracks/293').then(function(player){
-  player.play();
-});
+(function() {
 
-// SC.get('/tracks', {
-//   genres: 'seapunk', bpm: { from: 60 }
-// }).then(function(tracks) {
-//   console.log(tracks);
-//   for(i = 0; i < tracks.length; i++){
-//     console.log(tracks[i].stream_url);
-//     SC.stream('/tracks/293').then(function(player){
-//     player.play();
-//   });
-//   }
-// });
+  var year = 0;
+  var month = 0;
+  var day = 0;
+
+  function randomDate(){
+    year = 2001 + Math.floor(Math.random() * 15);
+    month = 1 + Math.floor(Math.random() * 12);
+    day = 1 + Math.floor(Math.random() * 28);
+  }
+  randomDate();
+  setInterval(randomDate,100);
 
 
+  // if( x seconds) {
+  //   generate random date;
+  // }
+
+  var spaceShot = "https://api.nasa.gov/planetary/apod?date="+year+"-"+month+"-"+day+"&api_key=OaFBdZCq89Gly77oIhEQF3fupeTBThyZ9mFAVYh8";
+  $.getJSON( spaceShot, {
+    })
+    .done(function( data ) {
+        console.log(data.hdurl);
+        $("img").attr("src", data.hdurl);
+        $("img").css('background-size', 'canvas');
+        $("img").css('background-repeat', 'repeat');
+    });
+})();
 
 
-var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+var game = new Phaser.Game(800, 600, Phaser.AUTO, 'container', { preload: preload, create: create, update: update }, transparent = true);
 
 function preload() {
   game.load.image('water', 'assets/sky.png');
   game.load.image('dolphin', 'assets/diamond.png');
   game.load.image('ball', 'assets/pangball.png');
-  game.load.bitmapFont('stack', 'assets/fonts/bitmapFonts/shortStack.png', 'assets/fonts/bitmapFonts/shortStack.xml');
 
 }
 
@@ -44,13 +52,7 @@ function create() {
   //background water created/position
   game.physics.startSystem(Phaser.Physics.ARCADE);
   game.physics.arcade.gravity.y = 150;
-  game.add.sprite(0, 0, 'water');
-
-  // text1 = game.add.bitmapText(200, 100, 'stack', 'BitmapText', 64);
-  // game.physics.arcade.enable(text1);
-  // text1.body.velocity.setTo(200, 200);
-  // text1.body.collideWorldBounds = true;
-  // text1.body.bounce.set(1);
+  // game.add.sprite(0, 0, 'water');
 
 
   //player created/position
@@ -64,7 +66,7 @@ function create() {
   swim = game.input.keyboard.addKey(Phaser.Keyboard.SHIFT);
 
   //Scoreboard
-  scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000'});
+  scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#fff'});
 
   words = game.add.group();
   words.enableBody = true;
