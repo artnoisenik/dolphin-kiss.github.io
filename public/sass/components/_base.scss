@@ -1,0 +1,20 @@
+// $db: white;
+
+// @include sections(200px, 30%, 1px solid black, inline-block);
+
+img{
+  position:fixed;
+  top: 0px;
+  left: -5px;
+  z-index: -1;
+  max-height: 720px;
+}
+
+#sidebar{
+  width: 37%;
+  height: 800px;
+  background-color: hotpink;
+  position: absolute;
+  right: -10px;
+  top: 0px;
+}

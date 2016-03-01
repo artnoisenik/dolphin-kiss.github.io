@@ -1,4 +1,16 @@
+
+
 (function() {
+
+  function input(){
+    var person=prompt("Please enter your name","")
+        uname = document.getElementById("uname");
+        uname.innerHTML = 'Player: '+person+ '!'
+}
+
+  // var name = window.prompt("Who's playing?");
+
+  // ('#sidebar').append('Name: ' + name);
 
   // var year = 0;
   // var month = 0;
@@ -36,11 +48,11 @@
   //   generate random date;
   // }
 
-
+  input();
 })();
 
 
-var game = new Phaser.Game(800, 600, Phaser.AUTO, 'container', { preload: preload, create: create, update: update }, transparent = true);
+var game = new Phaser.Game(800, 800, Phaser.AUTO, 'container', { preload: preload, create: create, update: update }, transparent = true);
 
 function preload() {
   game.load.image('water', 'assets/sky.png');
@@ -52,6 +64,7 @@ function preload() {
 var player;
 var swim;
 var words;
+var highScore = 0;
 var score = 0;
 var total = 0;
 var text1;
@@ -127,7 +140,19 @@ function update() {
   total--;
   score += 10;
   scoreText.text = 'Score: ' + score;
+  }
 
 }
 
-}
+function newHighScore() {
+  var highScore = 0;
+    if(score>highScore){
+      console.log(highScore);
+      // $('#sidebar').text(highScore);
+    }
+};
+
+$(score).on('change', newHighScore);
+newHighScore();
+
+// console.log(score);

@@ -1,0 +1,10 @@
+@mixin sections($height, $width, $border, $display) {
+
+  section {
+    height: $height;
+    width: $width;
+    border: $border;
+    display: $display;
+  }
+
+}
