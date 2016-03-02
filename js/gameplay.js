@@ -1,10 +1,26 @@
 (function() {
 
-  function input(){
-    var person=prompt("Please enter your name","")
-        uname = document.getElementById("uname");
-        uname.innerHTML = 'Player: '+person+ '!'
-}
+  function greet(){
+    person = localStorage.getItem("name");
+    lastHighScore = localStorage.getItem('highScore');
+    if (person == null || person == "null"){
+      alert("Hi, Stranger!");
+      person = prompt("What is your name?");
+      localStorage.setItem("name", person);
+    } else {
+      alert ("Hi, " + person + "!");
+    } // end greet
+      uname.innerHTML = 'Player: '+person+ '!';
+      $('#highScoreTotal').text(lastHighScore);
+  } // end function
+
+
+
+//   function input(){
+//     var person=prompt("Please enter your name","")
+//         uname = document.getElementById("uname");
+//         uname.innerHTML = 'Player: '+person+ '!'
+// }
 
   // var name = window.prompt("Who's playing?");
 
@@ -46,7 +62,8 @@
   //   generate random date;
   // }
 
-  input();
+  // input();
+  greet();
 })();
 
 
@@ -79,6 +96,13 @@ var highScore = 0;
 var score = 0;
 var total = 0;
 var gameOver;
+
+// var config = {
+//   fullName: document.getElementById('name').getAttribute('value'),
+//   userId: document.getElementById('id').getAttribute('value')
+// };
+//
+// localStorage.setItem('config', JSON.stringify(config));
 
 
 function create() {
@@ -277,17 +301,18 @@ function update() {
 
   //Kill enemis, update score and high score
   function collectWord (bullet, word) {
-  word.kill();
-  total--;
-  score += 10;
-  scoreText.text = 'score: ' + score;
-    if(score > highScore){
-      highScore = score;
-      console.log(highScore);
-      $('#highScoreTotal').text(highScore);
+    word.kill();
+    total--;
+    score += 10;
+    scoreText.text = 'score: ' + score;
+      if(score > highScore){
+        highScore = score;
+        console.log(highScore);
+        localStorage.setItem('highScore', highScore);
+        $('#highScoreTotal').text(highScore);
+      }
   }
 
-  }
 }
 
 
