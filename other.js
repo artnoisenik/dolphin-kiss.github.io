@@ -1,5 +1,3 @@
-//add stuff
-
 // (function() {
 
   // var year = 0;

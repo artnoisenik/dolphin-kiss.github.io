@@ -1,0 +1,14 @@
+img {
+  position: fixed;
+  top: 0px;
+  left: -5px;
+  z-index: -1;
+  max-height: 705px; }
+
+#sidebar {
+  width: 37%;
+  height: 100%;
+  background-color: hotpink;
+  position: absolute;
+  right: -10px;
+  top: 0px; }
