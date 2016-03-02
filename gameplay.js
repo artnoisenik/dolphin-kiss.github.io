@@ -1,5 +1,3 @@
-
-
 (function() {
 
   function input(){
@@ -58,10 +56,15 @@ function preload() {
   game.load.image('water', 'assets/sky.png');
   game.load.image('dolphin', 'assets/diamond.png');
   game.load.image('ball', 'assets/pangball.png');
+  game.load.image('bullet', 'assets/bullet.png');
 
 }
 
 var player;
+var bullets;
+var fireRate = 300;
+var nextFire = 0;
+
 var swim;
 var words;
 var highScore = 0;
@@ -81,6 +84,7 @@ function create() {
   //player created/position
   player = game.add.sprite(game.world.centerX, game.world.centerY, 'dolphin');
   game.physics.arcade.enable(player);
+  player.health = 100;
   player.body.bounce.y = 0.2;
   player.body.gravity.y = 300;
   player.body.collideWorldBounds = true;
@@ -94,8 +98,22 @@ function create() {
   words = game.add.group();
   words.enableBody = true;
 
+  //Heathbar
+  var barConfig = {x: 200, y: 100, width: 200, height: 20};
+  this.myHealthBar = new HealthBar(this.game, barConfig);
+  this.myHealthBar.setPosition(600, 36);
+
   // Create initial function instance
   createBall()
+
+  //Player Bullets
+    bullets = game.add.group();
+    bullets.enableBody = true;
+    bullets.physicsBodyType = Phaser.Physics.ARCADE;
+
+    bullets.createMultiple(50, 'bullet');
+    bullets.setAll('checkWorldBounds', true);
+    bullets.setAll('outOfBoundsKill', true);
 
 
 }
@@ -110,16 +128,31 @@ function createBall() {
 
 }
 
+function fire() {
+
+    if (game.time.now > nextFire && bullets.countDead() > 0)
+    {
+        nextFire = game.time.now + fireRate;
+
+        var bullet = bullets.getFirstDead();
+
+        bullet.reset(player.x - 8, player.y - 8);
+
+        game.physics.arcade.moveToPointer(bullet, 400);
+    }
+
+}
+
 function update() {
 
-    game.physics.arcade.overlap(player, words, collectWord, null, this);
+    game.physics.arcade.overlap(bullets, words, collectWord, null, this);
     // game.physics.arcade.overlap(player, text1, collectWord, null, this);
 
   //  only move when you click
   if (swim.isDown)
   {
       //  400 is the speed it will move towards the mouse
-      game.physics.arcade.moveToPointer(player, 350);
+      game.physics.arcade.moveToPointer(player, 250);
 
       //  if it's overlapping the mouse, don't move any more
       if (Phaser.Rectangle.contains(player.body, game.input.x, game.input.y))
@@ -131,28 +164,40 @@ function update() {
       player.body.velocity.setTo(0, 0);
   }
 
+  //fire player bullet
+  player.rotation = game.physics.arcade.angleToPointer(player);
+
+  if (swim.isDown){
+    fire();
+  }
+
+  //create enemies
   if (total < 10){
       createBall();
   }
 
-  function collectWord (player, word) {
+  //Kill enemis, update score and high score
+  function collectWord (bullet, word) {
   word.kill();
   total--;
   score += 10;
   scoreText.text = 'Score: ' + score;
+    if(score > highScore){
+      highScore = score;
+      console.log(highScore);
+      $('#highScoreTotal').text(highScore);
+  }
+
   }
 
 }
 
-function newHighScore() {
-  var highScore = 0;
-    if(score>highScore){
-      console.log(highScore);
-      // $('#sidebar').text(highScore);
-    }
-};
-
-$(score).on('change', newHighScore);
-newHighScore();
+// function newHighScore() {
+//   var highScore = 0;
+//
+// };
+//
+// $(score).on('change', newHighScore);
+// newHighScore();
 
 // console.log(score);
