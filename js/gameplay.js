@@ -32,7 +32,7 @@
      .done(function( data ) {
          console.log(data.hdurl);
          $("img").attr("src", data.hdurl);
-         $("img").css('width', '100%');
+         $("img").css('height', '100%');
          $("img").css('object-fit', 'fill');
          $("img").css('background-repeat', 'no-repeat');
      });
@@ -50,7 +50,7 @@
 })();
 
 
-var game = new Phaser.Game(800, 800, Phaser.AUTO, 'container', { preload: preload, create: create, update: update }, transparent = true);
+var game = new Phaser.Game(800, 690, Phaser.AUTO, 'container', { preload: preload, create: create, update: update }, transparent = true);
 
 function preload() {
   game.load.image('water', 'assets/sky.png');
