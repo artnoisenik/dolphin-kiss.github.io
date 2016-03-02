@@ -1,14 +1,30 @@
-img {
+div {
+  font-family: "Press Start 2P";
+  display: block;
+  font-size: 24px;
+  padding: 15px; }
+
+#spaceBackground {
   position: fixed;
   top: 0px;
   left: -5px;
   z-index: -1;
-  max-height: 705px; }
+}
 
 #sidebar {
   width: 37%;
-  height: 705px;
+  height: 100%;
   background-color: hotpink;
   position: absolute;
   right: -10px;
   top: 0px; }
+
+#dolphinLogo {
+  width: 85%;
+  padding: 15px; }
+
+article {
+  font-family: 'VT323';
+  font-size: 20px;
+  color: skyblue;
+  padding: 15px; }

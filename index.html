@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>DOLPHIN KISS</title>
+    <link href='https://fonts.googleapis.com/css?family=VT323|Press+Start+2P|Chango' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="public/css/style.css" media="screen" charset="utf-8">
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js"></script>
     <script src="js/phaser.min.js" type="text/javascript"></script>
@@ -10,16 +11,31 @@
 
   </head>
   <body>
-<div id = "container"></div>
 
-  <section id = "sidebar">
-    <div id = "uname"></div>
-      <div class="score">High Score:
-        <div id = "highScoreTotal">0</div>
-      </div>
-  </section>
+<section id = "container"></section>
 
-<img src="" alt="space background" />
+<section id = "sidebar">
+  <img src="assets/dolphinKissLogo.png" alt="Dolphin Kiss Logo" id = "dolphinLogo"/>
+  <div id = "uname"></div>
+  <div id = "highScoreTotal">0</div>
+  <article id = "instructions">
+    ***INSTRUCTIONS***<br />
+    # SHIFT to swim and shoot your kisses.<br />
+    ## Use MOUSE to move. You'll follow the cursor.<br />
+    # There's not winning. It's just survivial<br />
+    ## good luck.
+  </article>
+  <article id = "theStory">
+    ~THE STORY~<br />
+    // Surf nazis have invade the shore. Tossing their trash into the sea.<br />
+    // It's up to you to clean up the debris with the only thing a dolphin has.<br />
+    // Kisses.<br />
+    // Kiss everything into oblivion.<br />
+    // But be careful. Some of the junk's been mutated thanks to toxic ooze!
+  </article>
+</section>
+
+<img src="" alt="space background" id = "spaceBackground" />
 
   </body>
       <script type="text/javascript" src="js/gameplay.js"></script>
