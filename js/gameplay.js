@@ -63,7 +63,7 @@ function preload() {
 }
 
 var player;
-var lives = 3;
+var lives = 1;
 
 var bullets;
 var fireRate = 300;
@@ -78,6 +78,7 @@ var words;
 var highScore = 0;
 var score = 0;
 var total = 0;
+var gameOver;
 
 
 function create() {
@@ -102,8 +103,11 @@ function create() {
 //Scoreboard
   scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#fff'});
 
+  //creat enemies
   words = game.add.group();
   words.enableBody = true;
+  // Create initial function instance
+    createBall();
 
 //Heathbar
   game.add.text(500, 16, 'Health', { font: '25px Arial', fill: '#fff' });
@@ -111,10 +115,6 @@ function create() {
   this.myHealthBar = new HealthBar(this.game, barConfig);
   this.myHealthBar.setPosition(600, 56);
   this.healthValue = 100;
-
-
-// Create initial function instance
-  createBall()
 
 //Player Bullets
   bullets = game.add.group();
@@ -139,15 +139,15 @@ function create() {
     livesText = game.add.text(16, 56, 'lives : 3', { font: '25px Arial', fill: '#fff' });
 
 //Start text
-introText = game.add.text(game.world.centerX, 400, '- click to start -', { font: "40px Arial", fill: "#ffffff", align: "center" });
-introText.anchor.setTo(0.5, 0.5);
 
-game.input.onDown.add(createBall, this);
-
+//  Game over text
+  gameOver = game.add.text(game.world.centerX, game.world.centerY, '- game over -', { font: "40px Arial", fill: "#ffffff", align: "center" });
+  gameOver.visible = false;
 
 }
 
 function createBall() {
+
 
   word = words.create(game.world.randomX, (Math.random() * 50), 'ball');
   word.body.bounce.y = 0.9;
@@ -213,20 +213,25 @@ function enemyHitsPlayer (player,bullet) {
 
     console.log(lives);
 
-    if (this.healthValue === 0)
-    {
+    if (this.healthValue === 0){
+      console.log('loss');
       lives--;
       livesText.text = 'lives: ' + lives;
-      if (lives === 0)
-   {
-       gameOver();
-   }
+    if (lives === 0){
+      gameOver.visible = true;
+      player.kill();
+      // enemyBullets.callAll('kill');
+      // bullets.callAll('kill');
+      // words.callAll('kill');
+      // StateManager.destroy();
+
+
+      game.input.onTap.addOnce(restartA,this);
+    }
    else{
       this.healthValue = 110;
-
     }
-    }
-
+  }
 }
 
 function update() {
@@ -251,11 +256,13 @@ function update() {
   }
 
   //fire player bullet
+  if(lives > 0){
   player.rotation = game.physics.arcade.angleToPointer(player);
 
   if (swim.isDown){
     fire();
   }
+}
 
   //fire enemy bullet
   if (game.time.now > firingTimer)
@@ -281,17 +288,39 @@ function update() {
   }
 
   }
+}
+
+
+
+function restartA () {
+  // game.state.start('mystate',true,false);
+  // console.log('mystate');
+  // this.game.state.start("game", true, false);
+  // this.game.state.restart();
+    lives = 3;
+    livesText.text = 'lives: ' + lives;
+    score = 0;
+    scoreText.text = 'score: ' + score;
+    this.healthValue = 110;
+    this.myHealthBar.setPercent(this.healthValue);
+    // createBall();
+  // game.state.init();
+    //  A new level starts
+
+    // //resets the life count
+    // var lives = 3;
+    // this.healthValue = 110;
+    // //  And brings the aliens back from the dead :)
+    // words.removeAll();
+    createBall();
+    //
+    // //revives the player
+    player.revive();
+    // //hides the text
+    gameOver.visible = false;
 
 }
 
-function gameOver () {
-
-    player.velocity.setTo(0, 0);
-
-    introText.text = 'Game Over!';
-    introText.visible = true;
-
-}
 
 // function newHighScore() {
 //   var highScore = 0;
