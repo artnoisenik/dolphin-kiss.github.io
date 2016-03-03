@@ -177,7 +177,7 @@ function create() {
 //Start text
 
 //  Game over text
-  gameOver = game.add.text(game.world.centerX, game.world.centerY, '- game over -', { font: "40px Arial", fill: "#ffffff", align: "center" });
+  gameOver = game.add.text(150, game.world.centerY, '- game over - click to restart -', { font: "40px Arial", fill: "#ffffff"});
   gameOver.visible = false;
 
 }
