@@ -78,10 +78,12 @@ function create() {
   player.body.bounce.y = 0.2;
   player.body.gravity.y = 300;
   player.body.collideWorldBounds = true;
+  player.body.setSize( 38, 38 )
 
   swim = game.input.keyboard.addKey(Phaser.Keyboard.SHIFT);
 
-  cats = game.add.group();
+  // cats = game.add.group();
+  cats = game.add.physicsGroup();
   cats.enableBody = true;
 
   game.add.text( 500, 16, 'Health', { font: '25px Arial', fill: '#fff' } );
@@ -116,9 +118,13 @@ function create() {
 
 function createBall() {
   cat = cats.create( game.world.randomX, 0, 'ball' );
+  cat.body.setSize( 108, 70 )
+  // cat.body.bounce.setTo(1, 1);
+  cat.body.bounce.x = 1;
   cat.body.bounce.y = 0.9;
   cat.body.collideWorldBounds = true;
     total ++;
+  if (score > 200){   cat.body.velocity.setTo(200, 200); }
 }
 
 function fire() {
@@ -132,7 +138,8 @@ function fire() {
 
 function enemyFires () {
   enemyBullet = enemyBullets.getFirstExists( false );
-  livingEnemies.length=0;
+  livingEnemies.length = 0;
+  enemyBullet.body.setSize( 58, 38 )
 
   cats.forEachAlive(function( alien ){
     livingEnemies.push( cat );
@@ -198,6 +205,7 @@ function update() {
   if ( total < 5 ){ createBall(); }
 
   function killEnemyBullet ( bullet, enemyBullet ) { enemyBullet.kill(); }
+  // game.physics.arcade.collide(this.cats, this.cats);
 
   function collectCat ( bullet, cat ) {
     enemyBullet.kill();
@@ -226,6 +234,7 @@ function restartA () {
 function render() {
 
     // Sprite debug info
-    game.debug.spriteInfo(sprite, 32, 32);
-
+    game.debug.body(player);
+    game.debug.body(cat);
+    game.debug.body(enemyBullet);
 }
