@@ -1,6 +1,6 @@
 // $db: white;
 
-@include divs('Press Start 2P', block, 24px, 15px);
+@include divs('Press Start 2P', block, 15px, 15px);
 
 #spaceBackground{
   position:fixed;
@@ -8,6 +8,10 @@
   left: -5px;
   z-index: -1;
   max-height: 705px;
+}
+
+div{
+  background-color: yellow;
 }
 
 #sidebar{
@@ -30,4 +34,8 @@ article {
   color: skyblue;
   padding: 15px;
 
+}
+
+#theStory{
+  background-color: black;
 }

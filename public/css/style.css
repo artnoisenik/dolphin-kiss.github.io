@@ -1,7 +1,7 @@
 div {
   font-family: "Press Start 2P";
   display: block;
-  font-size: 24px;
+  font-size: 15px;
   padding: 15px; }
 
 #spaceBackground {
@@ -10,6 +10,9 @@ div {
   left: -5px;
   z-index: -1;
   max-height: 705px; }
+
+div {
+  background-color: yellow; }
 
 #sidebar {
   width: 37%;
@@ -28,3 +31,6 @@ article {
   font-size: 20px;
   color: skyblue;
   padding: 15px; }
+
+#theStory {
+  background-color: black; }

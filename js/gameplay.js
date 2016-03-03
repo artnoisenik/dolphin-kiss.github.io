@@ -1,5 +1,7 @@
 (function() {
 
+  !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+
   function greet(){
     person = localStorage.getItem( "name" );
     lastHighScore = localStorage.getItem( 'highScore' );
@@ -151,7 +153,7 @@ function enemyFires () {
     enemyBullet.reset(shooter.body.x, shooter.body.y);
     game.physics.arcade.moveToObject(enemyBullet,player,450);
       if ( score < 400 ){ firingTimer = game.time.now + 1000; }
-      else { firingTimer = game.time.now + 700; }
+      else { firingTimer = game.time.now + 600; }
     }
 }
 
