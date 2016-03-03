@@ -1,0 +1,44 @@
+{"frames": {
+
+"001.png":
+{
+	"frame": {"x":1,"y":1,"w":107,"h":42},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":10,"y":8,"w":107,"h":42},
+	"sourceSize": {"w":130,"h":60}
+},
+"002.png":
+{
+	"frame": {"x":110,"y":1,"w":107,"h":46},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":13,"y":8,"w":107,"h":46},
+	"sourceSize": {"w":130,"h":60}
+},
+"003.png":
+{
+	"frame": {"x":219,"y":1,"w":107,"h":42},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":10,"y":8,"w":107,"h":42},
+	"sourceSize": {"w":130,"h":60}
+},
+"004.png":
+{
+	"frame": {"x":328,"y":1,"w":103,"h":42},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":13,"y":7,"w":103,"h":42},
+	"sourceSize": {"w":130,"h":60}
+}},
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "dolphin.png",
+	"format": "RGBA8888",
+	"size": {"w":432,"h":48},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:1759be314ae1172fc39ebc88d6ace7f5:92ffb6d757bbaf333baa94b39f996840:d221d72487f54fb253d4f0321a0d63a0$"
+}
+}
