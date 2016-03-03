@@ -41,7 +41,7 @@
 })();
 
 
-var game = new Phaser.Game( 800, 600, Phaser.AUTO, 'container', { preload: preload, create: create, update: update, }, transparent = true );
+var game = new Phaser.Game( 800, 790, Phaser.AUTO, 'container', { preload: preload, create: create, update: update, }, transparent = true );
 
 function preload() {
   game.load.image( 'water', 'assets/sky.png' );
@@ -78,7 +78,7 @@ function create() {
   game.physics.arcade.enable( player );
   player.health = 100;
   player.body.bounce.y = 0.2;
-  player.body.gravity.y = 300;
+  player.body.gravity.y = 200;
   player.body.collideWorldBounds = true;
   player.body.setSize( 38, 38 )
 
@@ -134,7 +134,7 @@ function fire() {
     nextFire = game.time.now + fireRate;
     var bullet = bullets.getFirstDead();
     bullet.reset( player.x - 8, player.y - 8 );
-    game.physics.arcade.moveToPointer( bullet, 400 );
+    game.physics.arcade.moveToPointer( bullet, 650 );
   }
 }
 
@@ -190,7 +190,7 @@ function update() {
 
   if ( swim.isDown ){
     player.animations.play('swims');
-    game.physics.arcade.moveToPointer(player, 250);
+    game.physics.arcade.moveToPointer(player, 350);
 
       if( lives > 0){ fire(); }
 

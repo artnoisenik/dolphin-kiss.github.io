@@ -8,8 +8,7 @@ div {
   position: fixed;
   top: 0px;
   left: -5px;
-  z-index: -1;
-  max-height: 705px; }
+  z-index: -1; }
 
 div {
   background-color: yellow; }
