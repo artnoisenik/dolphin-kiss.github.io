@@ -149,12 +149,13 @@ function enemyFires () {
     var random=game.rnd.integerInRange( 0,livingEnemies.length-1 );
     var shooter=livingEnemies[random];
     enemyBullet.reset(shooter.body.x, shooter.body.y);
-    game.physics.arcade.moveToObject(enemyBullet,player,350);
-    firingTimer = game.time.now + 1000;
+    game.physics.arcade.moveToObject(enemyBullet,player,450);
+      if ( score < 400 ){ firingTimer = game.time.now + 1000; }
+      else { firingTimer = game.time.now + 700; }
     }
 }
 
-function enemyHitsPlayer (player,bullet) {
+function enemyHitsPlayer ( player, bullet ) {
   bullet.kill();
   this.healthValue = this.healthValue - 10;
   this.myHealthBar.setPercent(this.healthValue);
@@ -208,7 +209,6 @@ function update() {
   // game.physics.arcade.collide(this.cats, this.cats);
 
   function collectCat ( bullet, cat ) {
-    enemyBullet.kill();
     cat.kill();
     total--;
     score += 10;
