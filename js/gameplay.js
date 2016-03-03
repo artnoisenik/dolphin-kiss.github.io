@@ -39,7 +39,7 @@
 })();
 
 
-var game = new Phaser.Game( 800, 600, Phaser.AUTO, 'container', { preload: preload, create: create, update: update, render:render }, transparent = true );
+var game = new Phaser.Game( 800, 600, Phaser.AUTO, 'container', { preload: preload, create: create, update: update, }, transparent = true );
 
 function preload() {
   game.load.image( 'water', 'assets/sky.png' );
@@ -229,12 +229,4 @@ function restartA () {
   this.myHealthBar.setPercent( this.healthValue );
   player.revive();
   gameOver.visible = false;
-}
-
-function render() {
-
-    // Sprite debug info
-    game.debug.body(player);
-    game.debug.body(cat);
-    game.debug.body(enemyBullet);
 }
