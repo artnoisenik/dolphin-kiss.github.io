@@ -1,6 +1,6 @@
 // $db: white;
 
-@include divs('Press Start 2P', block, 15px, 15px);
+@include divs('Press Start 2P', block, 20px, 15px);
 
 #spaceBackground{
   position:fixed;
@@ -28,14 +28,23 @@ div{
   padding: 15px;
 }
 
-article {
+#instructions{
   font-family: 'VT323';
   font-size: 20px;
-  color: skyblue;
+  color: white;
   padding: 15px;
-
 }
 
-#theStory{
+#theStory {
+  @extend #instructions;
   background-color: black;
+  color: skyblue;
 }
+
+footer{
+  padding: 15px;
+}
+
+// .followMe{
+//   display: inline;
+// }
