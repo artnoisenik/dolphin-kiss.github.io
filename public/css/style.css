@@ -1,15 +1,17 @@
 div {
   font-family: "Press Start 2P";
   display: block;
-  font-size: 24px;
+  font-size: 20px;
   padding: 15px; }
 
 #spaceBackground {
   position: fixed;
   top: 0px;
   left: -5px;
-  z-index: -1;
-  max-height: 705px; }
+  z-index: -1; }
+
+div {
+  background-color: yellow; }
 
 #sidebar {
   width: 37%;
@@ -23,8 +25,15 @@ div {
   width: 85%;
   padding: 15px; }
 
-article {
+#instructions, #theStory {
   font-family: 'VT323';
   font-size: 20px;
-  color: skyblue;
+  color: white;
+  padding: 15px; }
+
+#theStory {
+  background-color: black;
+  color: skyblue; }
+
+footer {
   padding: 15px; }
