@@ -41,7 +41,7 @@
 })();
 
 
-var game = new Phaser.Game( 800, 790, Phaser.AUTO, 'container', { preload: preload, create: create, update: update, }, transparent = true );
+var game = new Phaser.Game( 800, 690, Phaser.AUTO, 'container', { preload: preload, create: create, update: update, }, transparent = true );
 
 function preload() {
   game.load.image( 'water', 'assets/sky.png' );
