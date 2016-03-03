@@ -11,7 +11,9 @@
       alert ("Hi, " + person + "!");
     } // end greet
       uname.innerHTML = 'Player: '+person+ '!';
-      $('#highScoreTotal').text(lastHighScore);
+      highScoreTotal.innerHTML = 'High Score: '+lastHighScore;
+
+      // $('#highScoreTotal').text(lastHighScore);
   } // end function
 
 
@@ -47,10 +49,11 @@
    $.getJSON(location)
      .done(function( data ) {
          console.log(data.hdurl);
-         $("img").attr("src", data.hdurl);
-         $("img").css('height', '100%');
-         $("img").css('object-fit', 'fill');
-         $("img").css('background-repeat', 'no-repeat');
+         var spacePic = document.getElementById('spaceBackground');
+         $(spacePic).attr("src", data.hdurl);
+         $(spacePic).css('height', '100%');
+         $(spacePic).css('object-fit', 'fill');
+         $(spacePic).css('background-repeat', 'no-repeat');
      });
   }
 
@@ -67,14 +70,15 @@
 })();
 
 
-var game = new Phaser.Game(800, 690, Phaser.AUTO, 'container', { preload: preload, create: create, update: update }, transparent = true);
+var game = new Phaser.Game(800, 600, Phaser.AUTO, 'container', { preload: preload, create: create, update: update }, transparent = true);
 
 function preload() {
   game.load.image('water', 'assets/sky.png');
-  game.load.image('dolphin', 'assets/diamond.png');
-  game.load.image('ball', 'assets/pangball.png');
-  game.load.image('bullet', 'assets/bullet.png');
-  game.load.image('enemyBullet', 'assets/enemy-bullet.png');
+  // game.load.image('dolphin', 'assets/diamond.png');
+  game.load.spritesheet('dolphin','assets/dolphin.png', 108, 48);
+  game.load.image('ball', 'assets/greenCat.png');
+  game.load.image('bullet', 'assets/heart_clear.png');
+  game.load.image('enemyBullet', 'assets/bulletCat_small.png');
 
 
 }
@@ -96,6 +100,8 @@ var highScore = 0;
 var score = 0;
 var total = 0;
 var gameOver;
+// var uname = document.getElementById("uname");
+// var scoreHtml = document.getElementById("highScoreTotal");
 
 // var config = {
 //   fullName: document.getElementById('name').getAttribute('value'),
@@ -109,12 +115,17 @@ function create() {
 
   //background water created/position
   game.physics.startSystem(Phaser.Physics.ARCADE);
-  game.physics.arcade.gravity.y = 150;
+  game.physics.arcade.gravity.y = 50;
   // game.add.sprite(0, 0, 'water');
 
 
   //player created/position
   player = game.add.sprite(game.world.centerX, game.world.centerY, 'dolphin');
+  // player.scale.setTo(2,2);
+  player.animations.add('swims', [0, 1, 2, 3], 10, true);
+  player.anchor.setTo(0.5,0.5);
+  // player.scale.x = -1
+
   game.physics.arcade.enable(player);
   player.health = 100;
   player.body.bounce.y = 0.2;
@@ -154,10 +165,11 @@ function create() {
   enemyBullets.enableBody = true;
   enemyBullets.physicsBodyType = Phaser.Physics.ARCADE;
   enemyBullets.createMultiple(30, 'enemyBullet');
-  enemyBullets.setAll('anchor.x', 0.5);
-  enemyBullets.setAll('anchor.y', 1);
+  // enemyBullets.setAll('anchor.x', 0.5);
+  // enemyBullets.setAll('anchor.y', 1);
   enemyBullets.setAll('outOfBoundsKill', true);
   enemyBullets.setAll('checkWorldBounds', true);
+  enemyBullets.scale.setTo(0.7,0.7);
 
 //Player lives
     livesText = game.add.text(16, 56, 'lives : 3', { font: '25px Arial', fill: '#fff' });
@@ -173,7 +185,7 @@ function create() {
 function createBall() {
 
 
-  word = words.create(game.world.randomX, (Math.random() * 50), 'ball');
+  word = words.create(game.world.randomX, 0, 'ball');
   word.body.bounce.y = 0.9;
   word.body.collideWorldBounds = true;
 
@@ -206,7 +218,7 @@ function enemyFires () {
     words.forEachAlive(function(alien){
 
         // put every living enemy in an array
-        livingEnemies.push(word);
+      livingEnemies.push(word);
     });
 
     if (enemyBullet && livingEnemies.length > 0)
@@ -219,8 +231,8 @@ function enemyFires () {
         // And fire the bullet from this enemy
         enemyBullet.reset(shooter.body.x, shooter.body.y);
 
-        game.physics.arcade.moveToObject(enemyBullet,player,320);
-        firingTimer = game.time.now + 2000;
+        game.physics.arcade.moveToObject(enemyBullet,player,350);
+        firingTimer = game.time.now + 1000;
     }
 
 }
@@ -244,12 +256,6 @@ function enemyHitsPlayer (player,bullet) {
     if (lives === 0){
       gameOver.visible = true;
       player.kill();
-      // enemyBullets.callAll('kill');
-      // bullets.callAll('kill');
-      // words.callAll('kill');
-      // StateManager.destroy();
-
-
       game.input.onTap.addOnce(restartA,this);
     }
    else{
@@ -261,32 +267,41 @@ function enemyHitsPlayer (player,bullet) {
 function update() {
 
     game.physics.arcade.overlap(bullets, words, collectWord, null, this);
+    game.physics.arcade.overlap(bullets, enemyBullets, killEnemyBullet, null, this);
     game.physics.arcade.overlap(enemyBullets, player, enemyHitsPlayer, null, this);
 
-  //  only move when you click
-  if (swim.isDown)
-  {
-      //  400 is the speed it will move towards the mouse
-      game.physics.arcade.moveToPointer(player, 250);
+    player.rotation = game.physics.arcade.angleToPointer(player);
+    if (game.input.activePointer.x < player.x) { player.scale.x = 1; player.scale.y = -1 }
+    else { player.scale.x = 1; player.scale.y = 1 }
+
+  if (swim.isDown){
+    player.animations.play('swims');
+    game.physics.arcade.moveToPointer(player, 250);
+      if( lives > 0){
+        fire();
+      }
+
+
 
       //  if it's overlapping the mouse, don't move any more
-      if (Phaser.Rectangle.contains(player.body, game.input.x, game.input.y))
-      {
+      if (Phaser.Rectangle.contains(player.body, game.input.x, game.input.y)){
+          player.animations.stop();
           player.body.velocity.setTo(0, 0);
       }
   }
   else{
+      player.animations.stop();
       player.body.velocity.setTo(0, 0);
   }
 
   //fire player bullet
-  if(lives > 0){
-  player.rotation = game.physics.arcade.angleToPointer(player);
+  // if(lives > 0){
+  // player.rotation = game.physics.arcade.angleToPointer(player);
 
   if (swim.isDown){
-    fire();
+
   }
-}
+// }
 
   //fire enemy bullet
   if (game.time.now > firingTimer)
@@ -295,21 +310,25 @@ function update() {
 }
 
   //create enemies
-  if (total < 10){
+  if (total < 5){
       createBall();
   }
 
   //Kill enemis, update score and high score
+  function killEnemyBullet (bullet, enemyBullet) {
+    enemyBullet.kill();
+  }
+
+  //Kill enemis, update score and high score
   function collectWord (bullet, word) {
+    enemyBullet.kill();
     word.kill();
     total--;
     score += 10;
     scoreText.text = 'score: ' + score;
       if(score > highScore){
         highScore = score;
-        console.log(highScore);
         localStorage.setItem('highScore', highScore);
-        $('#highScoreTotal').text(highScore);
       }
   }
 
@@ -318,41 +337,14 @@ function update() {
 
 
 function restartA () {
-  // game.state.start('mystate',true,false);
-  // console.log('mystate');
-  // this.game.state.start("game", true, false);
-  // this.game.state.restart();
+
     lives = 3;
     livesText.text = 'lives: ' + lives;
     score = 0;
     scoreText.text = 'score: ' + score;
     this.healthValue = 110;
     this.myHealthBar.setPercent(this.healthValue);
-    // createBall();
-  // game.state.init();
-    //  A new level starts
-
-    // //resets the life count
-    // var lives = 3;
-    // this.healthValue = 110;
-    // //  And brings the aliens back from the dead :)
-    // words.removeAll();
-    createBall();
-    //
-    // //revives the player
     player.revive();
-    // //hides the text
     gameOver.visible = false;
 
 }
-
-
-// function newHighScore() {
-//   var highScore = 0;
-//
-// };
-//
-// $(score).on('change', newHighScore);
-// newHighScore();
-
-// console.log(score);

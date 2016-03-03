@@ -1,10 +1,10 @@
-@mixin sections($height, $width, $border, $display) {
+@mixin divs($fontFamily, $display, $fontSize, $padding) {
 
-  section {
-    height: $height;
-    width: $width;
-    border: $border;
+  div {
+    font-family: $fontFamily;
     display: $display;
+    font-size: $fontSize;
+    padding: $padding;
   }
 
 }
