@@ -126,7 +126,7 @@ function createBall() {
   cat.body.bounce.y = 0.9;
   cat.body.collideWorldBounds = true;
     total ++;
-  if (score > 200){   cat.body.velocity.setTo(200, 200); }
+  if (score > 200){ cat.body.velocity.setTo(200, 200); }
 }
 
 function fire() {
@@ -153,7 +153,8 @@ function enemyFires () {
     enemyBullet.reset(shooter.body.x, shooter.body.y);
     game.physics.arcade.moveToObject(enemyBullet,player,450);
       if ( score < 400 ){ firingTimer = game.time.now + 1000; }
-      else { firingTimer = game.time.now + 600; }
+      else if ( score < 600 ) { firingTimer = game.time.now + 600; }
+      else { firingTimer = game.time.now + 400; }
     }
 }
 
