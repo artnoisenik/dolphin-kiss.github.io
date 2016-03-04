@@ -26,12 +26,8 @@
 
    $.getJSON( location )
      .done(function( data ) {
-         console.log( data.hdurl );
-         var spacePic = document.getElementById( 'spaceBackground' );
-         $( spacePic ).attr( "src", data.hdurl );
-         $( spacePic ).css( 'height', '100%' );
-         $( spacePic ).css( 'object-fit', 'fill' );
-         $( spacePic ).css( 'background-repeat', 'no-repeat' );
+      console.log( data.hdurl );
+      $( 'body' ).css( 'background', 'url(' +data.hdurl+ ')' );
      });
   }
 
@@ -39,7 +35,6 @@
   setInterval( spaceShot,20000 );
   greet();
 })();
-
 
 var game = new Phaser.Game( 800, 690, Phaser.AUTO, 'container', { preload: preload, create: create, update: update, }, transparent = true );
 
@@ -84,7 +79,6 @@ function create() {
 
   swim = game.input.keyboard.addKey(Phaser.Keyboard.SHIFT);
 
-  // cats = game.add.group();
   cats = game.add.physicsGroup();
   cats.enableBody = true;
 
@@ -121,7 +115,6 @@ function create() {
 function createBall() {
   cat = cats.create( game.world.randomX, 0, 'ball' );
   cat.body.setSize( 108, 70 )
-  // cat.body.bounce.setTo(1, 1);
   cat.body.bounce.x = 1;
   cat.body.bounce.y = 0.9;
   cat.body.collideWorldBounds = true;
@@ -209,7 +202,6 @@ function update() {
   if ( total < 5 ){ createBall(); }
 
   function killEnemyBullet ( bullet, enemyBullet ) { enemyBullet.kill(); }
-  // game.physics.arcade.collide(this.cats, this.cats);
 
   function collectCat ( bullet, cat ) {
     cat.kill();

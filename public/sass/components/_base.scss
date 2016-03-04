@@ -1,5 +1,3 @@
-// $db: white;
-
 @include divs('Press Start 2P', block, 20px, 15px);
 
 #spaceBackground{
@@ -45,6 +43,7 @@ footer{
   padding: 15px;
 }
 
-// .followMe{
-//   display: inline;
-// }
+body {
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
