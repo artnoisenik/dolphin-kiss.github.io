@@ -3,8 +3,7 @@
   !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
 
   function greet(){
-    person = localStorage.getItem( "name" );
-    lastHighScore = localStorage.getItem( 'highScore' );
+    var person = localStorage.getItem( "name" );
     if ( person == null || person == "null" ){
       alert( "Hi, Stranger!" );
       person = prompt( "What is your name?" );
@@ -13,7 +12,6 @@
       alert ("Hi, " + person + "!" );
     }
       uname.innerHTML = 'Player: '+person+ '!';
-      highScoreTotal.innerHTML = 'High Score: '+lastHighScore;
   }
 
   function spaceShot(){
@@ -59,7 +57,7 @@ var livingEnemies = [];
 var cats;
 
 var highScore = 0;
-var score = 0;
+var score = 0
 var total = 0;
 var gameOver;
 
@@ -224,4 +222,8 @@ function restartA () {
   this.myHealthBar.setPercent( this.healthValue );
   player.revive();
   gameOver.visible = false;
+  var lastHighScore = localStorage.getItem( 'highScore' );
+  console.log(lastHighScore);
+  highScoreTotal.innerHTML = 'High Score: '+lastHighScore;
+
 }
